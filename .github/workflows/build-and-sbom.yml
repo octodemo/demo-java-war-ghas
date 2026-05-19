@@ -1,0 +1,58 @@
+name: Build and SBOM Scan
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Build WAR with Maven
+        run: mvn --batch-mode package -DskipTests
+
+      - name: Upload WAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: demo-java-war
+          path: target/demo-java-war.war
+
+      - name: Install Syft
+        run: curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+
+      - name: Generate SBOM (CycloneDX JSON)
+        run: syft scan target/demo-java-war.war -o cyclonedx-json=sbom.cdx.json
+
+      - name: Generate SBOM (SPDX JSON)
+        run: syft scan target/demo-java-war.war -o spdx-json=sbom.spdx.json
+
+      - name: Generate SBOM (table — printed to log)
+        run: syft scan target/demo-java-war.war -o table
+
+      - name: Upload CycloneDX SBOM
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom-cyclonedx-json
+          path: sbom.cdx.json
+
+      - name: Upload SPDX SBOM
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom-spdx-json
+          path: sbom.spdx.json
