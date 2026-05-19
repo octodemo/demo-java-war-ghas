@@ -15,57 +15,66 @@
     <name>Demo Java WAR Application</name>
     <description>WAR module containing the application and all dependencies. This is what Syft scans.</description>
 
+    <properties>
+        <log4j.version>2.14.1</log4j.version>
+        <spring.version>5.3.17</spring.version>
+        <commons-text.version>1.9</commons-text.version>
+        <jackson-databind.version>2.13.0</jackson-databind.version>
+        <snakeyaml.version>1.29</snakeyaml.version>
+        <servlet-api.version>4.0.1</servlet-api.version>
+    </properties>
+
     <dependencies>
-        <!-- Log4j 2.14.1 — CVE-2021-44228 (Log4Shell), CVE-2021-45046 -->
+        <!-- Log4j — CVE-2021-44228 (Log4Shell), CVE-2021-45046 -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.14.1</version>
+            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>2.14.1</version>
+            <version>${log4j.version}</version>
         </dependency>
 
-        <!-- Spring MVC 5.3.17 — CVE-2022-22965 (Spring4Shell) -->
+        <!-- Spring MVC — CVE-2022-22965 (Spring4Shell) -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>5.3.17</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>5.3.17</version>
+            <version>${spring.version}</version>
         </dependency>
 
-        <!-- Apache Commons Text 1.9 — CVE-2022-42889 (Text4Shell) -->
+        <!-- Apache Commons Text — CVE-2022-42889 (Text4Shell) -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-text</artifactId>
-            <version>1.9</version>
+            <version>${commons-text.version}</version>
         </dependency>
 
-        <!-- Jackson Databind 2.13.0 — CVE-2022-42003, CVE-2022-42004 -->
+        <!-- Jackson Databind — CVE-2022-42003, CVE-2022-42004 -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.13.0</version>
+            <version>${jackson-databind.version}</version>
         </dependency>
 
-        <!-- Snakeyaml 1.29 — CVE-2022-25857 (DoS via billion laughs) -->
+        <!-- Snakeyaml — CVE-2022-25857 (DoS via billion laughs) -->
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
-            <version>1.29</version>
+            <version>${snakeyaml.version}</version>
         </dependency>
 
         <!-- Servlet API (provided by container) -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version>
+            <version>${servlet-api.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
