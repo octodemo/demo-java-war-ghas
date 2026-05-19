@@ -1,13 +1,11 @@
 version: 2
 updates:
-  - package-ecosystem: "maven"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 10
-    labels:
-      - "dependencies"
-      - "java"
+  # Maven scanning intentionally omitted.
+  # The root pom.xml is an aggregator with no <dependencies>; all vulnerable
+  # dependencies live in webapp/pom.xml and are surfaced exclusively via the
+  # Syft SBOM submission to the GitHub Dependency Graph API (see build-and-sbom.yml).
+  # This demonstrates that native pom.xml scanning alone is insufficient when
+  # dependencies are buried in child modules or packaged WARs.
 
   - package-ecosystem: "github-actions"
     directory: "/"
